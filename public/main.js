@@ -220,14 +220,13 @@ function createEditorUI() {
       return;
     }
 
-    // Crée un menu déroulant pour choisir une catégorie
+    // Liste des catégories possibles (exclut city si carte != world)
     const cats = Object.keys(TYPES).filter(cat => {
-      // Exclut "Ville" uniquement si la carte actuelle n'est pas de type "world"
       if (cat === 'city' && CURRENT_MAP.type !== 'world') return false;
       return true;
     });
 
-    // Affiche une boîte de dialogue avec un menu déroulant
+    // Petit popup avec menu déroulant
     const select = document.createElement('select');
     select.innerHTML = cats.map(cat => `<option value="${cat}">${TYPES[cat]?.label || cat}</option>`).join('');
 
@@ -244,7 +243,6 @@ function createEditorUI() {
     const title = document.createElement('h3');
     title.textContent = 'Choisissez une catégorie :';
     dialog.appendChild(title);
-
     dialog.appendChild(select);
 
     const btnConfirm = document.createElement('button');
@@ -254,7 +252,7 @@ function createEditorUI() {
       ADD_MODE = true;
       ADD_CATEGORY = select.value;
       leafletMap.getContainer().style.cursor = 'crosshair';
-      document.body.removeChild(dialog); // Supprime le popup
+      document.body.removeChild(dialog); // ferme le popup
     };
     dialog.appendChild(btnConfirm);
 
@@ -270,30 +268,27 @@ function createEditorUI() {
   };
   controls.appendChild(btnAdd);
 
-// Bouton Sauvegarder vers le backend
-const btnSaveServer = document.createElement('button');
-btnSaveServer.textContent = 'Sauvegarder (serveur)';
-btnSaveServer.onclick = async () => {
-  const slug = CURRENT_MAP.slug;
-  try {
-    const res = await fetch(`/markers?map=map_${slug}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(CURRENT_MARKERS, null, 2)
-    });
-    const result = await res.json();
-    alert(result.message || 'Sauvegarde réussie !');
-  } catch (err) {
-    alert('Erreur lors de la sauvegarde sur le serveur.');
-    console.error(err);
-  }
-};
-controls.appendChild(btnSaveServer);
+  // Bouton Sauvegarder vers le backend
+  const btnSaveServer = document.createElement('button');
+  btnSaveServer.textContent = 'Sauvegarder (serveur)';
+  btnSaveServer.onclick = async () => {
+    const slug = CURRENT_MAP.slug;
+    try {
+      const res = await fetch(`/markers?map=map_${slug}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(CURRENT_MARKERS, null, 2)
+      });
+      const result = await res.json();
+      alert(result.message || 'Sauvegarde réussie !');
+    } catch (err) {
+      alert('Erreur lors de la sauvegarde sur le serveur.');
+      console.error(err);
+    }
+  };
+  controls.appendChild(btnSaveServer);
 
-
-  controls.appendChild(btnExport);
-
-  // Ajout par clic
+  // Ajout par clic (après confirmation d'une catégorie)
   leafletMap.on('click', (e) => {
     if (!EDIT_MODE || !ADD_MODE) return;
 
@@ -311,11 +306,14 @@ controls.appendChild(btnSaveServer);
 
     const mm = leafletMarkers[leafletMarkers.length - 1];
     if (mm) mm.openPopup();
+
+    // Reset après ajout
     ADD_MODE = false;
     ADD_CATEGORY = null;
-    leafletMap.getContainer().style.cursor = 'pointer';
+    leafletMap.getContainer().style.cursor = EDIT_MODE ? 'pointer' : '';
   });
 }
+
 
 function markerPopupHtmlEditable(m, idx) {
   if (!EDIT_MODE) return markerPopupHtml(m);
