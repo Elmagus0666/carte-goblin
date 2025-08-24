@@ -68,6 +68,17 @@ app.get('/types', (req, res) => {
   }
 });
 
+// Renvoie les entités (entities.json)
+app.get('/entities', (req, res) => {
+  const filePath = './data/entities.json';
+  try {
+    const entities = fs.readFileSync(filePath, 'utf8');
+    res.json(JSON.parse(entities));
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur lors du chargement de entities.json' });
+  }
+});
+
 
 // Enregistre les actions des utilisateurs
 app.post('/log', (req, res) => {

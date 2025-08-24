@@ -23,13 +23,12 @@ let leafletMarkers = [];
 
 // ---------------------- INIT ----------------------
 async function init() {
-  // Load data
-// Load data
-const [maps, types, entitiesArr] = await Promise.all([
-  loadJSON('/maps'),
-  loadJSON('/types'),
-  loadJSON('data/entities.json') // <- celui-là reste statique car tu n’as pas encore fait d’endpoint
-]);
+  // Load data via API Express
+  const [maps, types, entitiesArr] = await Promise.all([
+    loadJSON('/maps'),
+    loadJSON('/types'),
+    loadJSON('/entities')   // <-- corrigé ici
+  ]);
 
   MAPS = maps;
   TYPES = types;
@@ -57,6 +56,7 @@ const [maps, types, entitiesArr] = await Promise.all([
   buildFilters();
   renderMap();
 }
+
 
 
 // ---------------------- LOAD MARKERS ----------------------
