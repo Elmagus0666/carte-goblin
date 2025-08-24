@@ -11,7 +11,6 @@
       "priests": "Chamane Grinzouille"
     },
     "map_ref": "map_villegob"
-
   },
   {
     "x": 300,
@@ -19,13 +18,12 @@
     "category": "merchant",
     "title": "Atelier de Potions",
     "attrs": {
-      "name": "Atelier de Potions",
-      "tags": ["alchimie", "explosifs"],
+      "name": "Atelier de Potions ",
+      "tags": "alchimie, explosifs et tous le reste.",
       "opening_hours": "Quand la marmite n’explose pas",
       "contact": "Gobelin Alchimiste : Pustule"
     },
     "map_ref": "map_villegob"
-
   },
   {
     "x": 700,
@@ -39,7 +37,5 @@
       "notes": "Milice qui surveille les barricades."
     },
     "map_ref": "map_villegob"
-
   }
 ]
-

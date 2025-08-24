@@ -24,11 +24,13 @@ let leafletMarkers = [];
 // ---------------------- INIT ----------------------
 async function init() {
   // Load data
-  const [maps, types, entitiesArr] = await Promise.all([
-    loadJSON('data/maps.json'),
-    loadJSON('data/types.json'),
-    loadJSON('data/entities.json')
-  ]);
+// Load data
+const [maps, types, entitiesArr] = await Promise.all([
+  loadJSON('/maps'),
+  loadJSON('/types'),
+  loadJSON('data/entities.json') // <- celui-là reste statique car tu n’as pas encore fait d’endpoint
+]);
+
   MAPS = maps;
   TYPES = types;
   ENTITIES = Object.fromEntries(entitiesArr.map(e => [e.id, e]));
@@ -56,11 +58,13 @@ async function init() {
   renderMap();
 }
 
+
 // ---------------------- LOAD MARKERS ----------------------
 async function loadMarkersForCurrentMap() {
   const slug = CURRENT_MAP.slug;
-  const file = slug === 'royaume' ? 'data/markers_royaume.json' : `data/markers_${slug}.json`;
-  let data = await loadJSON(file);
+
+  // Appel API au backend
+  let data = await loadJSON(`/markers?map=map_${slug}`);
 
   // Corrige si JSON du type [[ {...}, {...} ]]
   if (Array.isArray(data) && data.length === 1 && Array.isArray(data[0])) {
@@ -70,6 +74,7 @@ async function loadMarkersForCurrentMap() {
   CURRENT_MARKERS = data;
   console.log("Markers chargés:", slug, CURRENT_MARKERS);
 }
+
 
 // ---------------------- FILTERS ----------------------
 function buildFilters() {
@@ -265,20 +270,27 @@ function createEditorUI() {
   };
   controls.appendChild(btnAdd);
 
-  // Bouton Export
-  const btnExport = document.createElement('button');
-  btnExport.textContent = 'Exporter JSON';
-  btnExport.onclick = () => {
-    const slug = CURRENT_MAP.slug;
-    const dataStr = JSON.stringify(CURRENT_MARKERS, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `markers_${slug}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
+// Bouton Sauvegarder vers le backend
+const btnSaveServer = document.createElement('button');
+btnSaveServer.textContent = 'Sauvegarder (serveur)';
+btnSaveServer.onclick = async () => {
+  const slug = CURRENT_MAP.slug;
+  try {
+    const res = await fetch(`/markers?map=map_${slug}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(CURRENT_MARKERS, null, 2)
+    });
+    const result = await res.json();
+    alert(result.message || 'Sauvegarde réussie !');
+  } catch (err) {
+    alert('Erreur lors de la sauvegarde sur le serveur.');
+    console.error(err);
+  }
+};
+controls.appendChild(btnSaveServer);
+
+
   controls.appendChild(btnExport);
 
   // Ajout par clic
