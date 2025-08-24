@@ -1,0 +1,40 @@
+[
+  {
+    "id": "guild_ombres",
+    "type": "guild",
+    "name": "La Confrérie des Ombres",
+    "scope": "royaume",
+    "leaders": [
+      {
+        "name": "Maître Voilé",
+        "title": "Grand-Voile"
+      }
+    ],
+    "orders": [
+      {
+        "id": "ord_001",
+        "title": "Contrat portuaire",
+        "city": "ville-dentjaune",
+        "status": "en cours"
+      },
+      {
+        "id": "ord_002",
+        "title": "Filature de marchand",
+        "city": "ville-kunoeil",
+        "status": "terminé"
+      }
+    ],
+    "rivals": [
+      "guild_gardiens"
+    ],
+    "notes": "Opère la nuit ; code encre noire."
+  },
+  {
+    "id": "npc_dentjaune",
+    "type": "npc",
+    "name": "Dentjaune",
+    "role": "Voleur – référent villes",
+    "faction": "La Confrérie des Ombres",
+    "notes": "Responsable des infos de ville."
+  }
+]

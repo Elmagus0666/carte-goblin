@@ -1,0 +1,14 @@
+[
+  {
+    "x": 600,
+    "y": 400,
+    "category": "threat",
+    "title": "Nécrobaleines",
+    "attrs": {
+      "name": "Mur’Kaath & Thranholl",
+      "danger": "Élevé",
+      "notes": "Chant brisé au crépuscule"
+    },
+    "map_ref": "map_ville_souffle"
+  }
+]

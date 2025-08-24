@@ -1,0 +1,42 @@
+[
+  {
+    "x": 600,
+    "y": 300,
+    "category": "merchant",
+    "title": "Boutique des Arcanes",
+    "attrs": {
+      "name": "Boutique des Arcanes",
+      "tags": ["grimoires", "composants magiques"],
+      "opening_hours": "Lun–Sam, 9h–20h",
+      "contact": "Place Haute"
+    },
+    "map_ref": "map_kaer_maga"
+  },
+  {
+    "x": 800,
+    "y": 500,
+    "category": "temple",
+    "title": "Sanctuaire de Norgorber",
+    "attrs": {
+      "name": "Sanctuaire de Norgorber",
+      "deity": "Norgorber",
+      "description": "Culte secret du dieu de l’assassinat et des mensonges.",
+      "priests": "Les Masques Noirs",
+      "notes": "Lieu interdit aux étrangers."
+    },
+    "map_ref": "map_kaer_maga"
+  },
+  {
+    "x": 700,
+    "y": 700,
+    "category": "gang",
+    "title": "Les Crocs de la Faille",
+    "attrs": {
+      "name": "Les Crocs de la Faille",
+      "leaders": ["Grash le Borgne"],
+      "territory": "Quartier des Falaises",
+      "status": "actif"
+    },
+    "map_ref": "map_kaer_maga"
+  }
+]

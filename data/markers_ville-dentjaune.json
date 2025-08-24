@@ -1,0 +1,53 @@
+[
+  {
+    "x": 700,
+    "y": 400,
+    "category": "merchant",
+    "title": "Herboriste Ventre-Mousse",
+    "attrs": {
+      "name": "Ventre-Mousse",
+      "tags": [
+        "plantes",
+        "alchimie"
+      ],
+      "opening_hours": "Lun–Jeu 10–18h",
+      "contact": "Place du Puits"
+    },
+    "map_ref": "map_ville_dentjaune"
+  },
+  {
+    "x": 1000,
+    "y": 600,
+    "category": "gang",
+    "title": "Goules des Égouts",
+    "attrs": {
+      "name": "Goules des Égouts",
+      "leaders": [
+        "Bois-Noir"
+      ],
+      "territory": "Quartier bas",
+      "rackets": [
+        "protection",
+        "contrebande"
+      ],
+      "status": "actif"
+    },
+    "map_ref": "map_ville_dentjaune"
+  },
+  {
+    "x": 1200,
+    "y": 300,
+    "category": "guild",
+    "title": "Confrérie des Ombres – Loge locale",
+    "entity_id": "guild_ombres",
+    "map_ref": "map_ville_dentjaune"
+  },
+  {
+    "x": 900,
+    "y": 500,
+    "category": "npc",
+    "title": "Dentjaune",
+    "entity_id": "npc_dentjaune",
+    "map_ref": "map_ville_dentjaune"
+  }
+]

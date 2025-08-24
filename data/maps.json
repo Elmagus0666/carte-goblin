@@ -1,0 +1,43 @@
+[
+  {
+    "id": "map_royaume",
+    "slug": "royaume",
+    "title": "Royaume de Varisie",
+    "image": "images/royaume.png",
+    "width": 3840,
+    "height": 2160,
+    "type": "world"
+  },
+  {
+    "id": "map_magnimar",
+    "slug": "magnimar",
+    "title": "Magnimar",
+    "image": "images/magnimar.jpeg",
+    "width": 474,
+    "height": 722,
+    "type": "city",
+    "parent": "map_royaume"
+  },
+  {
+    "id": "map_kaer_maga",
+    "slug": "kaer-maga",
+    "title": "Kaer Maga",
+    "image": "images/kaer_maga.jpg",
+    "width": 2048,
+    "height": 1652,
+    "type": "city",
+    "parent": "map_royaume"
+  },
+  {
+    "id": "map_villegob",
+    "slug": "villegob",
+    "title": "villegob",
+    "image": "images/villagegob.png",
+    "width": 1024,
+    "height": 1024,
+    "type": "city",
+    "parent": "map_royaume"
+  }  
+
+  
+]

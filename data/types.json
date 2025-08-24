@@ -1,0 +1,37 @@
+{
+  "city": {
+    "label": "Ville",
+    "icon": "icons/qaitbay-citadel.png",
+    "fields": ["name", "population", "notes"]
+  },
+  "temple": {
+    "label": "Temple",
+    "icon": "icons/kneeling.png",
+    "fields": ["name", "deity", "description", "priests", "rituals", "notes"]
+  },
+  "merchant": {
+    "label": "Commerçant",
+    "icon": "icons/shop.png",
+    "fields": ["name", "tags", "opening_hours", "contact"]
+  },
+  "gang": {
+    "label": "Gang",
+    "icon": "icons/skull.png",
+    "fields": ["name", "leaders", "territory", "status"]
+  },
+  "guard": {
+    "label": "Garde",
+    "icon": "icons/shield.png",
+    "fields": ["name", "captain", "size", "notes"]
+  },
+  "guild": {
+    "label": "Guilde",
+    "icon": "icons/guild.png",
+    "fields": ["name", "scope", "leaders", "orders", "rivals", "notes"]
+  },
+  "threat": {
+    "label": "Menace",
+    "icon": "icons/fish-monster.png",
+    "fields": ["name", "danger", "notes"]
+  }
+}

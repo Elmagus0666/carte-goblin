@@ -1,0 +1,45 @@
+[
+  {
+    "x": 500,
+    "y": 500,
+    "category": "temple",
+    "title": "Temple de Nyx",
+    "attrs": {
+      "name": "Temple de Nyx",
+      "deity": "Nyx",
+      "description": "Sanctuaire central des gobelins dédié à la nuit et aux étoiles.",
+      "priests": "Chamane Grinzouille"
+    },
+    "map_ref": "map_villegob"
+
+  },
+  {
+    "x": 300,
+    "y": 600,
+    "category": "merchant",
+    "title": "Atelier de Potions",
+    "attrs": {
+      "name": "Atelier de Potions",
+      "tags": ["alchimie", "explosifs"],
+      "opening_hours": "Quand la marmite n’explose pas",
+      "contact": "Gobelin Alchimiste : Pustule"
+    },
+    "map_ref": "map_villegob"
+
+  },
+  {
+    "x": 700,
+    "y": 400,
+    "category": "guard",
+    "title": "Rondins de Défense",
+    "attrs": {
+      "name": "Rondins de Défense",
+      "captain": "Chef Croc-Roux",
+      "size": "30 gobelins",
+      "notes": "Milice qui surveille les barricades."
+    },
+    "map_ref": "map_villegob"
+
+  }
+]
+

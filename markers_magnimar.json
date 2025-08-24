@@ -1,0 +1,54 @@
+[
+  {
+    "x": 200,
+    "y": 400,
+    "category": "merchant",
+    "title": "Marché du Pont",
+    "attrs": {
+      "name": "Marché du Pont",
+      "tags": [
+        "épices",
+        "objets divers"
+      ],
+      "opening_hours": "Tous les jours à partir de l’aube",
+      "contact": "Quartier du Pont"
+    },
+    "map_ref": "map_magnimar"
+  },
+  {
+    "x": 350,
+    "y": 500,
+    "category": "temple",
+    "title": "Temple de Desna",
+    "attrs": {
+      "name": "Temple de Desna",
+      "deity": "Desna",
+      "description": "Lieu de culte de la déesse des voyages et des étoiles.",
+      "priests": "Prêtresse Aluenn",
+      "rituals": "Prières nocturnes",
+      "notes": ""
+    },
+    "map_ref": "map_magnimar"
+  },
+  {
+    "x": 400,
+    "y": 600,
+    "category": "guard",
+    "title": "Casernes des Veilleurs",
+    "attrs": {
+      "name": "Casernes des Veilleurs",
+      "captain": "Sir Jorvan",
+      "size": "200 gardes",
+      "notes": "Assurent la sécurité de la cité."
+    },
+    "map_ref": "map_magnimar"
+  },
+  {
+    "x": 191,
+    "y": 527,
+    "category": "gang",
+    "title": "Nouveau point",
+    "attrs": {},
+    "map_ref": "map_magnimar"
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "x": 885,
+    "y": 300,
+    "category": "city",
+    "title": "Magnimar",
+    "attrs": {
+      "name": "Magnimar",
+      "population": "~16 000",
+      "notes": "Grande cité portuaire au sud-ouest de la Varisie."
+    },
+    "map_ref": "map_royaume",
+    "link_to": "magnimar"
+  },
+  {
+    "x": 3296,
+    "y": 940,
+    "category": "city",
+    "title": "Kaer Maga",
+    "attrs": {
+      "name": "Kaer Maga",
+      "population": "~12 000",
+      "notes": "Cité bâtie dans les falaises, réputée pour son anarchie."
+    },
+    "map_ref": "map_royaume",
+    "link_to": "kaer-maga"
+  },
+  {
+    "x": 1694,
+    "y": 194,
+    "category": "city",
+    "title": "Village Gobelin",
+    "attrs": {
+      "name": "Villegob",
+      "population": "~400",
+      "notes": "Village barricadé, sanctuaire du clan gobelin protecteur."
+    },
+    "map_ref": "map_royaume",
+    "link_to": "villegob"
+  },
+  {
+    "x": 1392,
+    "y": 479,
+    "category": "temple",
+    "title": "test",
+    "attrs": {
+      "name": "temple",
+      "notes": ""
+    },
+    "map_ref": "map_royaume"
+  }
+]

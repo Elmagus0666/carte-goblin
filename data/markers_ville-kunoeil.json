@@ -1,0 +1,18 @@
+[
+  {
+    "x": 800,
+    "y": 500,
+    "category": "merchant",
+    "title": "Forgeron Fer-Furtif",
+    "attrs": {
+      "name": "Fer-Furtif",
+      "tags": [
+        "armes",
+        "armures"
+      ],
+      "opening_hours": "Mar–Sam 9–17h",
+      "contact": "Rue des Marteaux"
+    },
+    "map_ref": "map_ville_kunoeil"
+  }
+]
