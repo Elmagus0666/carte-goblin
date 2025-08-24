@@ -3,6 +3,11 @@ const fs = require('fs');
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const { createClient } = require('@supabase/supabase-js');
+
+const supabaseUrl = process.env.SUPABASE_URL || "https://zkapxuybvmjjtlpcftne.supabase.co"; // ton URL Supabase
+const supabaseKey = process.env.SUPABASE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InprYXB4dXlidm1qanRscGNmdG5lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYwNzY0NDEsImV4cCI6MjA3MTY1MjQ0MX0.YXBOU_Trf8BNVsR71lzl2lRrfLNUHaHHcjGcy9oufZ0"; // ta clé anon/public
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Middleware
 app.use(cors());
@@ -13,38 +18,50 @@ function cleanMapRef(mapRef) {
   return mapRef.replace(/^map_/, ''); // supprime le "map_" si présent
 }
 
-// Charge les marqueurs depuis un fichier JSON spécifique à la carte
-app.get('/markers', (req, res) => {
-  let mapRef = req.query.map || 'map_royaume';
+// GET markers
+app.get('/markers', async (req, res) => {
+  const mapRef = (req.query.map || 'map_royaume').replace(/^map_/, '');
+  const { data, error } = await supabase
+    .from('markers')
+    .select('*')
+    .eq('map_ref', mapRef);
 
-  mapRef = cleanMapRef(mapRef); // → ex: "map_magnimar" devient "magnimar"
-
-  const filePath = `./data/markers_${mapRef}.json`;
-  console.log(`Chemin du fichier : ${filePath}`);
-
-  try {
-    const markers = fs.readFileSync(filePath, 'utf8');
-    res.json(JSON.parse(markers));
-  } catch (error) {
-    res.status(404).json({ message: `Fichier de marqueurs non trouvé pour la carte : ${mapRef}` });
+  if (error) {
+    console.error(error);
+    return res.status(500).json({ error: error.message });
   }
+
+  res.json(data);
 });
 
-// Met à jour les marqueurs
-app.post('/markers', (req, res) => {
-  let mapRef = req.query.map || 'map_royaume';
-
-  mapRef = cleanMapRef(mapRef);
-
-  const filePath = `./data/markers_${mapRef}.json`;
+// POST markers (remplace tous les markers pour une map donnée)
+app.post('/markers', async (req, res) => {
+  const mapRef = (req.query.map || 'map_royaume').replace(/^map_/, '');
+  const markers = req.body.map(m => ({ ...m, map_ref: mapRef }));
 
   try {
-    fs.writeFileSync(filePath, JSON.stringify(req.body, null, 2));
+    // Supprime les anciens
+    const { error: delError } = await supabase
+      .from('markers')
+      .delete()
+      .eq('map_ref', mapRef);
+
+    if (delError) throw delError;
+
+    // Insère les nouveaux
+    const { error: insError } = await supabase
+      .from('markers')
+      .insert(markers);
+
+    if (insError) throw insError;
+
     res.json({ message: 'Marqueurs mis à jour avec succès.' });
-  } catch (error) {
-    res.status(500).json({ message: `Erreur lors de la mise à jour des marqueurs pour la carte : ${mapRef}` });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
   }
 });
+
 
 // Renvoie la liste des cartes (maps.json)
 app.get('/maps', (req, res) => {

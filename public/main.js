@@ -341,24 +341,27 @@ function markerPopupHtmlEditable(m, idx) {
 }
 
 // ---------------------- RENDER MARKERS ----------------------
+
 function renderMarkers() {
   // Supprime les marqueurs existants
   leafletMarkers.forEach(mm => mm.remove());
   leafletMarkers = [];
 
-  // Affiche tous les marqueurs sans appliquer de filtre
+  // Boucle sur tous les markers
   CURRENT_MARKERS.forEach((m, idx) => {
     const marker = L.marker([m.y, m.x], { icon: makeIcon(m.category) }).addTo(leafletMap);
 
-    // Lie une popup vide, qui sera mise à jour dynamiquement
+    // Prépare une popup vide, qu'on remplira à l'ouverture
     marker.bindPopup('', { autoClose: true, closeOnClick: true });
 
     marker.on('popupopen', () => {
-      // Génère le HTML selon le mode
+      // Reconstruit le contenu à chaque ouverture
       const html = markerPopupHtmlEditable(m, idx);
       marker.setPopupContent(html);
 
-      if (!EDIT_MODE) return; // Lecture seule si le mode édition est désactivé
+      // Si édition désactivée → lecture seule
+      if (!EDIT_MODE) return;
+
       lastEditedIndex = idx;
 
       const elTitle = document.getElementById('fldTitle');
@@ -371,6 +374,8 @@ function renderMarkers() {
           const mm = CURRENT_MARKERS[lastEditedIndex];
           mm.title = elTitle.value;
           mm.category = elCat.value;
+
+          // MAJ des attrs en fonction des champs du type
           const def = TYPES[mm.category] || {};
           const fields = def.fields || [];
           mm.attrs = {};
@@ -378,6 +383,7 @@ function renderMarkers() {
             const inp = document.querySelector(`[data-attr="${f}"]`);
             if (inp) mm.attrs[f] = inp.value;
           });
+
           renderMarkers();
         };
       }
@@ -391,7 +397,7 @@ function renderMarkers() {
         };
       }
 
-      // Changement de catégorie -> recharge la popup
+      // Changement de catégorie → recharge directement la popup
       if (elCat) {
         elCat.onchange = () => {
           const mm = CURRENT_MARKERS[lastEditedIndex];
@@ -405,7 +411,6 @@ function renderMarkers() {
     leafletMarkers.push(marker);
   });
 }
-
 
 
 // ---------------------- HOOK INIT ----------------------
