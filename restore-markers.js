@@ -4,8 +4,8 @@ const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
 
 // ⚠️ Mets tes vraies clés ici (ou mieux : dans un fichier .env)
-const supabaseUrl = process.env.SUPABASE_URL || "https://xxxx.supabase.co";
-const supabaseKey = process.env.SUPABASE_KEY || "eyJhbGciOiJI..."; // clé anon
+const supabaseUrl = process.env.SUPABASE_URL || "https://zkapxuybvmjjtlpcftne.supabase.co"; // ton URL Supabase
+const supabaseKey = process.env.SUPABASE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InprYXB4dXlidm1qanRscGNmdG5lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYwNzY0NDEsImV4cCI6MjA3MTY1MjQ0MX0.YXBOU_Trf8BNVsR71lzl2lRrfLNUHaHHcjGcy9oufZ0"; // ta clé anon/public
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Fichier backup à restaurer (passé en argument CLI)

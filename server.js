@@ -34,30 +34,61 @@ app.get('/markers', async (req, res) => {
   res.json(data);
 });
 
-// POST markers (remplace tous les markers pour une map donnée)
-app.post('/markers', async (req, res) => {
-  const mapRef = (req.query.map || 'map_royaume').replace(/^map_/, '');
-  const markers = req.body.map(m => ({ ...m, map_ref: mapRef }));
+// Ajouter un marker
+app.post('/marker', async (req, res) => {
+  const marker = req.body;
 
   try {
-    // Supprime les anciens
-    const { error: delError } = await supabase
+    const { data, error } = await supabase
+      .from('markers')
+      .insert(marker)
+      .select(); // pour renvoyer l'ID créé
+
+    if (error) throw error;
+
+    res.json({ message: "Marker ajouté", marker: data[0] });
+  } catch (err) {
+    console.error("Erreur ajout marker:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Mettre à jour un marker
+app.patch('/marker/:id', async (req, res) => {
+  const { id } = req.params;
+  const updates = req.body;
+
+  try {
+    const { data, error } = await supabase
+      .from('markers')
+      .update(updates)
+      .eq('id', id)
+      .select();
+
+    if (error) throw error;
+
+    res.json({ message: "Marker mis à jour", marker: data[0] });
+  } catch (err) {
+    console.error("Erreur update marker:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Supprimer un marker
+app.delete('/marker/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const { error } = await supabase
       .from('markers')
       .delete()
-      .eq('map_ref', mapRef);
+      .eq('id', id);
 
-    if (delError) throw delError;
+    if (error) throw error;
 
-    // Insère les nouveaux
-    const { error: insError } = await supabase
-      .from('markers')
-      .insert(markers);
-
-    if (insError) throw insError;
-
-    res.json({ message: 'Marqueurs mis à jour avec succès.' });
+    res.json({ message: "Marker supprimé", id });
   } catch (err) {
-    console.error(err);
+    console.error("Erreur suppression marker:", err.message);
     res.status(500).json({ error: err.message });
   }
 });

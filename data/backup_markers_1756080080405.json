@@ -1,0 +1,223 @@
+[
+  {
+    "id": "d14c06fe-5033-4f77-b43d-f3cd85be7964",
+    "map_ref": "ville-dentjaune",
+    "x": 700,
+    "y": 400,
+    "category": "merchant",
+    "title": "Herboriste Ventre-Mousse",
+    "attrs": {
+      "name": "Ventre-Mousse",
+      "tags": [
+        "plantes",
+        "alchimie"
+      ],
+      "contact": "Place du Puits",
+      "opening_hours": "Lun–Jeu 10–18h"
+    }
+  },
+  {
+    "id": "55dceaac-c5dd-4231-919b-92fb522a7552",
+    "map_ref": "ville-dentjaune",
+    "x": 1000,
+    "y": 600,
+    "category": "gang",
+    "title": "Goules des Égouts",
+    "attrs": {
+      "name": "Goules des Égouts",
+      "status": "actif",
+      "leaders": [
+        "Bois-Noir"
+      ],
+      "rackets": [
+        "protection",
+        "contrebande"
+      ],
+      "territory": "Quartier bas"
+    }
+  },
+  {
+    "id": "43d1c3a3-f969-4ba9-a2cc-460dfee6f072",
+    "map_ref": "ville-dentjaune",
+    "x": 1200,
+    "y": 300,
+    "category": "guild",
+    "title": "Confrérie des Ombres – Loge locale",
+    "attrs": {}
+  },
+  {
+    "id": "76be44d1-2a89-4ca3-84e9-9a8d771beb6c",
+    "map_ref": "ville-dentjaune",
+    "x": 900,
+    "y": 500,
+    "category": "npc",
+    "title": "Dentjaune",
+    "attrs": {}
+  },
+  {
+    "id": "6771530a-bf7d-45dc-b137-e9876264282a",
+    "map_ref": "ville-kunoeil",
+    "x": 800,
+    "y": 500,
+    "category": "merchant",
+    "title": "Forgeron Fer-Furtif",
+    "attrs": {
+      "name": "Fer-Furtif",
+      "tags": [
+        "armes",
+        "armures"
+      ],
+      "contact": "Rue des Marteaux",
+      "opening_hours": "Mar–Sam 9–17h"
+    }
+  },
+  {
+    "id": "83be657d-b65f-443b-9057-f758b8fc8ba6",
+    "map_ref": "ville-souffle",
+    "x": 600,
+    "y": 400,
+    "category": "threat",
+    "title": "Nécrobaleines",
+    "attrs": {
+      "name": "Mur’Kaath & Thranholl",
+      "notes": "Chant brisé au crépuscule",
+      "danger": "Élevé"
+    }
+  },
+  {
+    "id": "33325094-7160-4397-bb9c-8b6f5d736a12",
+    "map_ref": "magnimar",
+    "x": 200,
+    "y": 400,
+    "category": "merchant",
+    "title": "Marché du Pont",
+    "attrs": {
+      "name": "Marché du Pont",
+      "tags": [
+        "épices",
+        "objets divers"
+      ],
+      "contact": "Quartier du Pont",
+      "opening_hours": "Tous les jours à partir de l’aube"
+    }
+  },
+  {
+    "id": "2746d21a-a037-4210-ba5a-5b97df309379",
+    "map_ref": "magnimar",
+    "x": 350,
+    "y": 500,
+    "category": "temple",
+    "title": "Temple de Desna",
+    "attrs": {
+      "name": "Temple de Desna",
+      "deity": "Desna",
+      "priests": "Prêtresse Aluenn",
+      "rituals": "Prières nocturnes",
+      "description": "Lieu de culte de la déesse des voyages et des étoiles."
+    }
+  },
+  {
+    "id": "552c382b-f464-45d8-91a2-3e9604f901c8",
+    "map_ref": "magnimar",
+    "x": 400,
+    "y": 600,
+    "category": "guard",
+    "title": "Casernes des Veilleurs",
+    "attrs": {
+      "name": "Casernes des Veilleurs",
+      "size": "200 gardes",
+      "notes": "Assurent la sécurité de la cité.",
+      "captain": "Sir Jorvan"
+    }
+  },
+  {
+    "id": "c3e20c7f-96d9-4533-869c-87ea748bc0d2",
+    "map_ref": "kaer-maga",
+    "x": 600,
+    "y": 300,
+    "category": "merchant",
+    "title": "Boutique des Arcanes",
+    "attrs": {
+      "name": "Boutique des Arcanes",
+      "tags": [
+        "grimoires",
+        "composants magiques"
+      ],
+      "contact": "Place Haute",
+      "opening_hours": "Lun–Sam, 9h–20h"
+    }
+  },
+  {
+    "id": "e16753f9-22fe-4a97-8b73-30b2a6d20369",
+    "map_ref": "kaer-maga",
+    "x": 800,
+    "y": 500,
+    "category": "temple",
+    "title": "Sanctuaire de Norgorber",
+    "attrs": {
+      "name": "Sanctuaire de Norgorber",
+      "deity": "Norgorber",
+      "notes": "Lieu interdit aux étrangers.",
+      "priests": "Les Masques Noirs",
+      "description": "Culte secret du dieu de l’assassinat et des mensonges."
+    }
+  },
+  {
+    "id": "bfb51f1e-2b3c-473f-bd38-2cce8cf98254",
+    "map_ref": "kaer-maga",
+    "x": 700,
+    "y": 700,
+    "category": "gang",
+    "title": "Les Crocs de la Faille",
+    "attrs": {
+      "name": "Les Crocs de la Faille",
+      "status": "actif",
+      "leaders": [
+        "Grash le Borgne"
+      ],
+      "territory": "Quartier des Falaises"
+    }
+  },
+  {
+    "id": "64f73418-d9ba-44ef-8481-6e53d3336e22",
+    "map_ref": "villegob",
+    "x": 500,
+    "y": 500,
+    "category": "temple",
+    "title": "Temple de Nyx",
+    "attrs": {
+      "name": "Temple de Nyx",
+      "deity": "Nyx",
+      "priests": "Chamane Grinzouille",
+      "description": "Sanctuaire central des gobelins dédié à la nuit et aux étoiles."
+    }
+  },
+  {
+    "id": "63d5ced2-5fd0-4417-a943-ab10fe45d861",
+    "map_ref": "villegob",
+    "x": 300,
+    "y": 600,
+    "category": "merchant",
+    "title": "Atelier de Potions",
+    "attrs": {
+      "name": "Atelier de Potions ",
+      "tags": "alchimie, explosifs et tous le reste.",
+      "contact": "Gobelin Alchimiste : Pustule",
+      "opening_hours": "Quand la marmite n’explose pas"
+    }
+  },
+  {
+    "id": "77de18f9-45d3-4f76-97ae-b9eebbe55523",
+    "map_ref": "villegob",
+    "x": 700,
+    "y": 400,
+    "category": "guard",
+    "title": "Rondins de Défense",
+    "attrs": {
+      "name": "Rondins de Défense",
+      "size": "30 gobelins",
+      "notes": "Milice qui surveille les barricades.",
+      "captain": "Chef Croc-Roux"
+    }
+  }
+]

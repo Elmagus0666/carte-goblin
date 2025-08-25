@@ -268,50 +268,49 @@ function createEditorUI() {
   };
   controls.appendChild(btnAdd);
 
-  // Bouton Sauvegarder vers le backend
-  const btnSaveServer = document.createElement('button');
-  btnSaveServer.textContent = 'Sauvegarder (serveur)';
-  btnSaveServer.onclick = async () => {
-    const slug = CURRENT_MAP.slug;
-    try {
-      const res = await fetch(`/markers?map=map_${slug}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(CURRENT_MARKERS, null, 2)
-      });
-      const result = await res.json();
-      alert(result.message || 'Sauvegarde réussie !');
-    } catch (err) {
-      alert('Erreur lors de la sauvegarde sur le serveur.');
-      console.error(err);
-    }
+// Ajout par clic (après choix catégorie)
+leafletMap.on('click', async (e) => {
+  if (!EDIT_MODE || !ADD_MODE) return;
+
+  const x = Math.round(e.latlng.lng), y = Math.round(e.latlng.lat);
+  const m = {
+    x, y,
+    category: ADD_CATEGORY,
+    title: 'Nouveau point',
+    attrs: {},
+    map_ref: CURRENT_MAP.slug
   };
-  controls.appendChild(btnSaveServer);
 
-  // Ajout par clic (après confirmation d'une catégorie)
-  leafletMap.on('click', (e) => {
-    if (!EDIT_MODE || !ADD_MODE) return;
+  try {
+    // Envoi direct au serveur
+    const res = await fetch('/marker', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(m)
+    });
+    const result = await res.json();
 
-    const x = Math.round(e.latlng.lng), y = Math.round(e.latlng.lat);
-    const m = {
-      x, y,
-      category: ADD_CATEGORY,
-      title: 'Nouveau point',
-      attrs: {},
-      map_ref: CURRENT_MAP.id
-    };
+    if (result.marker) {
+      // Ajoute en local avec l'ID généré
+      CURRENT_MARKERS.push(result.marker);
+      renderMarkers();
+      // Ouvre la popup d'édition du nouveau marker
+      const mm = leafletMarkers[leafletMarkers.length - 1];
+      if (mm) mm.openPopup();
+    } else {
+      alert("❌ Erreur lors de l'ajout du marker");
+    }
+  } catch (err) {
+    alert("❌ Erreur API ajout marker");
+    console.error(err);
+  }
 
-    CURRENT_MARKERS.push(m);
-    renderMarkers();
+  // Reset mode
+  ADD_MODE = false;
+  ADD_CATEGORY = null;
+  leafletMap.getContainer().style.cursor = EDIT_MODE ? 'pointer' : '';
+});
 
-    const mm = leafletMarkers[leafletMarkers.length - 1];
-    if (mm) mm.openPopup();
-
-    // Reset après ajout
-    ADD_MODE = false;
-    ADD_CATEGORY = null;
-    leafletMap.getContainer().style.cursor = EDIT_MODE ? 'pointer' : '';
-  });
 }
 
 
@@ -347,35 +346,32 @@ function renderMarkers() {
   leafletMarkers.forEach(mm => mm.remove());
   leafletMarkers = [];
 
-  // Boucle sur tous les markers
+  // Affiche tous les marqueurs
   CURRENT_MARKERS.forEach((m, idx) => {
     const marker = L.marker([m.y, m.x], { icon: makeIcon(m.category) }).addTo(leafletMap);
 
-    // Prépare une popup vide, qu'on remplira à l'ouverture
     marker.bindPopup('', { autoClose: true, closeOnClick: true });
 
     marker.on('popupopen', () => {
-      // Reconstruit le contenu à chaque ouverture
       const html = markerPopupHtmlEditable(m, idx);
       marker.setPopupContent(html);
 
-      // Si édition désactivée → lecture seule
-      if (!EDIT_MODE) return;
-
+      if (!EDIT_MODE) return; // Lecture seule si pas en édition
       lastEditedIndex = idx;
 
       const elTitle = document.getElementById('fldTitle');
       const elCat = document.getElementById('fldCategory');
-
-      // Sauvegarde
       const btnSave = document.getElementById('btnSave');
+      const btnDelete = document.getElementById('btnDelete');
+
+      // Sauvegarde individuelle
       if (btnSave) {
-        btnSave.onclick = () => {
+        btnSave.onclick = async () => {
           const mm = CURRENT_MARKERS[lastEditedIndex];
           mm.title = elTitle.value;
           mm.category = elCat.value;
 
-          // MAJ des attrs en fonction des champs du type
+          // MAJ des attrs
           const def = TYPES[mm.category] || {};
           const fields = def.fields || [];
           mm.attrs = {};
@@ -384,25 +380,57 @@ function renderMarkers() {
             if (inp) mm.attrs[f] = inp.value;
           });
 
+          try {
+            let res;
+            if (mm.id) {
+              // déjà en DB → update
+              res = await fetch(`/marker/${mm.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(mm)
+              });
+            } else {
+              // nouveau marker → insert
+              res = await fetch(`/marker`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(mm)
+              });
+              const result = await res.json();
+              if (result.marker?.id) {
+                mm.id = result.marker.id; // stocker l'ID retourné
+              }
+            }
+
+            if (!res.ok) throw new Error("Erreur API");
+            console.log("✅ Marker sauvegardé :", mm);
+          } catch (err) {
+            alert("❌ Erreur de sauvegarde");
+            console.error(err);
+          }
+
           renderMarkers();
         };
       }
 
-      // Suppression
-      const btnDelete = document.getElementById('btnDelete');
+      // Suppression individuelle
       if (btnDelete) {
-        btnDelete.onclick = () => {
-          CURRENT_MARKERS.splice(lastEditedIndex, 1);
-          renderMarkers();
-        };
-      }
-
-      // Changement de catégorie → recharge directement la popup
-      if (elCat) {
-        elCat.onchange = () => {
+        btnDelete.onclick = async () => {
           const mm = CURRENT_MARKERS[lastEditedIndex];
-          mm.category = elCat.value;
-          mm.attrs = {};
+          if (mm.id) {
+            try {
+              const res = await fetch(`/marker/${mm.id}`, { method: "DELETE" });
+              if (!res.ok) throw new Error("Erreur API");
+              console.log("🗑️ Marker supprimé :", mm.id);
+            } catch (err) {
+              alert("❌ Erreur suppression");
+              console.error(err);
+              return;
+            }
+          }
+
+          // Enlève aussi côté front
+          CURRENT_MARKERS.splice(lastEditedIndex, 1);
           renderMarkers();
         };
       }
